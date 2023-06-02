@@ -15,7 +15,7 @@ const createNode = (x, y, node_name, heuristic, real_distance, food) => {
 		node_name: node_name,
 		h_distance: heuristic,
 		real_distance: real_distance,
-		positionInMatrix: {x: x, y: y},
+		positionInMatrix: {row: x, column: y},
 		food: false,
 		neighbors: [],
 		visited: false,
