@@ -51,8 +51,8 @@ export function executeAstar(data) {
     ].snakeHead = true;
   }
 
-  console.log(result.map((foodPath) => {
-    return foodPath.map((path) => {
-  }))
+  // console.log(result.map((foodPath) => {
+  //   return foodPath.map((path) => {
+  // }))
   return result;
 }
