@@ -1,4 +1,6 @@
-import manhattanDistance from './util/manhattanDistance.js';
+export const manhattanDistance = (x1, y1, x2, y2) => {
+  return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+};
 
 export const findSnakeAndFoods = (data) => {
   const matrix = data.matrix;
@@ -6,7 +8,7 @@ export const findSnakeAndFoods = (data) => {
 
   const lines = matrix.length;
   const columns = matrix[0].length;
-  
+
   let result = {
     snakeHead: [],
     foods: [],
@@ -15,9 +17,9 @@ export const findSnakeAndFoods = (data) => {
   for (let i = 0; i < lines; i++) {
     for (let j = 0; j < columns; j++) {
       if (matrix[i][j].snakeHead) {
-        result.snakeHead = [i,j];
+        result.snakeHead = [i, j];
       } else if (matrix[i][j].food) {
-        result.foods.push([i,j]);
+        result.foods.push([i, j]);
       }
     }
   }
@@ -25,9 +27,7 @@ export const findSnakeAndFoods = (data) => {
   // console.log("snakeHead:", snakeHead, "  |  ","food:", food)
 
   return result;
-}
-
-
+};
 
 /*
   Recebe uma matriz de dados e retorna uma matriz de distancias de manhattan.
@@ -74,11 +74,13 @@ export const dataMatrixToManhattanMatrix = (data, snakeHead) => {
   for (let i = 0; i < lines; i++) {
     manhattanMatrix.push([]);
     for (let j = 0; j < columns; j++) {
-      manhattanMatrix[i].push(manhattanDistance(i, j, snakeHead[0], snakeHead[1]));
+      manhattanMatrix[i].push(
+        manhattanDistance(i, j, snakeHead[0], snakeHead[1])
+      );
     }
   }
 
   // console.log(manhattanMatrix)
 
   return manhattanMatrix;
-}
+};
