@@ -18,12 +18,13 @@ const getRandomFoods = (INITIAL_SNAKE) => {
   return randomFoods;
 };
 
-const BOARD_SIZE = 10;
+const BOARD_SIZE = 50;
 const INITIAL_SNAKE = [
   { x: Math.floor(BOARD_SIZE / 2), y: Math.floor(BOARD_SIZE / 2) },
 ];
-const FOOD_COUNT = 5;
+const FOOD_COUNT = 25;
 const INITIAL_FOODS = getRandomFoods(INITIAL_SNAKE);
+const SPEED_IN_MS = 5;
 
 const DIRECTION = {
   UP: "UP",
@@ -87,6 +88,8 @@ const App = () => {
   useEffect(() => {
     const moveSnake = setInterval(() => {
       setSnake((prevSnake) => {
+        // const nextDirection = direction;
+        // const nextDirection = RANDOM_DIRECTIONS.shift();
         const nextDirection = ASTAR_DIRECTIONS.shift();
         const newHead = getNewHead(prevSnake[0], nextDirection);
         const newSnake = [...prevSnake];
@@ -106,31 +109,41 @@ const App = () => {
 
         return newSnake;
       });
-    }, 200);
+    }, SPEED_IN_MS);
 
     return () => clearInterval(moveSnake);
   }, [snake, foods]);
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <div className="h-full w-full grid grid-cols-10 gap-1">
-        {Array.from({ length: BOARD_SIZE * BOARD_SIZE }).map((_, index) => {
-          const x = index % BOARD_SIZE;
-          const y = Math.floor(index / BOARD_SIZE);
-          const isSnake = snake.some(
-            (segment) => segment.x === x && segment.y === y
-          );
-          const isFood = foods.some((food) => food.x === x && food.y === y);
-
-          return (
-            <div
-              key={index}
-              className={`w-full h-full ${
-                isSnake ? "bg-black" : isFood ? "bg-green-500" : "bg-gray-200"
-              } border border-gray-300`}
-            />
-          );
-        })}
+    <div className="h-screen w-screen flex items-center justify-center">
+      <div className="w-[900px] h-[900px]">
+        <div className="h-full w-full flex gap-1">
+          {Array.from({ length: BOARD_SIZE }).map((_, x) => {
+            return (
+              <div className="h-full w-full flex flex-col gap-1">
+                {Array.from({ length: BOARD_SIZE }).map((_, y) => {
+                  const isSnake = snake.some(
+                    (cell) => cell.x === x && cell.y === y
+                  );
+                  const isFood = foods.some(
+                    (cell) => cell.x === x && cell.y === y
+                  );
+                  return (
+                    <div
+                      className={`w-full h-full ${
+                        isSnake
+                          ? "bg-black"
+                          : isFood
+                          ? "bg-green-500"
+                          : "bg-gray-200"
+                      } border border-gray-300`}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
