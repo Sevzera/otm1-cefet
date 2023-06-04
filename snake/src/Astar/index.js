@@ -51,8 +51,37 @@ export function executeAstar(data) {
     ].snakeHead = true;
   }
 
-  // console.log(result.map((foodPath) => {
-  //   return foodPath.map((path) => {
-  // }))
   return result;
 }
+
+export const getAstarDirections = (boardSize, headCoords, foodCoords) => {
+  const matrix = Array.from({ length: boardSize }, (_, i) =>
+    Array.from({ length: boardSize }, (_, j) => ({
+      snakeHead: i === headCoords.x && j === headCoords.y,
+      food: foodCoords.some((food) => food.x === j && food.y === i),
+    }))
+  );
+
+  const result = executeAstar({ matrix });
+  const paths = result.map((path) =>
+    path[0].map((node) => node.positionInMatrix)
+  );
+
+  const directions = [];
+  for (let i = 0; i < paths.length; i++) {
+    for (let j = 0; j < paths[i].length; j++) {
+      const currentCell = paths[i][j];
+      const nextCell = paths[i][j + 1];
+      if (!nextCell) break;
+      if (currentCell.row !== nextCell.row) {
+        if (currentCell.row > nextCell.row) directions.push("UP");
+        else if (currentCell.row < nextCell.row) directions.push("DOWN");
+      } else if (currentCell.column !== nextCell.column) {
+        if (currentCell.column > nextCell.column) directions.push("LEFT");
+        else if (currentCell.column < nextCell.column) directions.push("RIGHT");
+      }
+    }
+  }
+
+  return directions;
+};

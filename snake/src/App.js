@@ -1,42 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { executeAstar } from "./Astar/index";
+import { getAstarDirections } from "./Astar/index";
 
-const mockData = {
-  matrix: [
-    [
-      { snakeHead: false, food: true },
-      { snakeHead: false, food: false },
-      { snakeHead: false, food: true },
-      { snakeHead: false, food: false },
-    ],
-    [
-      { snakeHead: false, food: false },
-      { snakeHead: false, food: false },
-      { snakeHead: false, food: false },
-      { snakeHead: false, food: false },
-    ],
-    [
-      { snakeHead: false, food: false },
-      { snakeHead: true, food: false },
-      { snakeHead: false, food: false },
-      { snakeHead: false, food: true },
-    ],
-    [
-      { snakeHead: false, food: false },
-      { snakeHead: false, food: false },
-      { snakeHead: false, food: false },
-      { snakeHead: false, food: false },
-    ],
-  ],
+const getRandomFoods = (INITIAL_SNAKE) => {
+  const randomFoods = [];
+  while (randomFoods.length < FOOD_COUNT) {
+    const newFood = {
+      x: Math.floor(Math.random() * BOARD_SIZE),
+      y: Math.floor(Math.random() * BOARD_SIZE),
+    };
+    if (
+      !randomFoods.some((f) => f.x === newFood.x && f.y === newFood.y) &&
+      !INITIAL_SNAKE.some((s) => s.x === newFood.x && s.y === newFood.y)
+    ) {
+      randomFoods.push(newFood);
+    }
+  }
+  return randomFoods;
 };
-
-executeAstar(mockData);
 
 const BOARD_SIZE = 10;
 const INITIAL_SNAKE = [
   { x: Math.floor(BOARD_SIZE / 2), y: Math.floor(BOARD_SIZE / 2) },
 ];
 const FOOD_COUNT = 5;
+const INITIAL_FOODS = getRandomFoods(INITIAL_SNAKE);
+
 const DIRECTION = {
   UP: "UP",
   DOWN: "DOWN",
@@ -44,12 +32,19 @@ const DIRECTION = {
   RIGHT: "RIGHT",
 };
 const DIRECTION_ARRAY = Object.values(DIRECTION);
+
 const RANDOM_DIRECTIONS = [];
 const RANDOM_DIRECTIONS_LENGTH = 100;
 while (RANDOM_DIRECTIONS.length < RANDOM_DIRECTIONS_LENGTH) {
   const randomIndex = Math.floor(Math.random() * DIRECTION_ARRAY.length);
   RANDOM_DIRECTIONS.push(DIRECTION_ARRAY[randomIndex]);
 }
+
+const ASTAR_DIRECTIONS = getAstarDirections(
+  BOARD_SIZE,
+  INITIAL_SNAKE[0],
+  INITIAL_FOODS
+);
 
 const getNewHead = (currentHead, direction) => {
   let newHead = { ...currentHead };
@@ -67,26 +62,9 @@ const getNewHead = (currentHead, direction) => {
   return newHead;
 };
 
-const getRandomFoods = () => {
-  const randomFoods = [];
-  while (randomFoods.length < FOOD_COUNT) {
-    const newFood = {
-      x: Math.floor(Math.random() * BOARD_SIZE),
-      y: Math.floor(Math.random() * BOARD_SIZE),
-    };
-    if (
-      !randomFoods.some((f) => f.x === newFood.x && f.y === newFood.y) &&
-      !INITIAL_SNAKE.some((s) => s.x === newFood.x && s.y === newFood.y)
-    ) {
-      randomFoods.push(newFood);
-    }
-  }
-  return randomFoods;
-};
-
 const App = () => {
   const [snake, setSnake] = useState(INITIAL_SNAKE);
-  const [foods, setFoods] = useState(getRandomFoods(snake));
+  const [foods, setFoods] = useState(INITIAL_FOODS);
   const [direction, setDirection] = useState(DIRECTION.RIGHT);
 
   useEffect(() => {
@@ -109,7 +87,7 @@ const App = () => {
   useEffect(() => {
     const moveSnake = setInterval(() => {
       setSnake((prevSnake) => {
-        const nextDirection = RANDOM_DIRECTIONS.shift() || direction;
+        const nextDirection = ASTAR_DIRECTIONS.shift();
         const newHead = getNewHead(prevSnake[0], nextDirection);
         const newSnake = [...prevSnake];
         newSnake.unshift(newHead);
@@ -134,8 +112,8 @@ const App = () => {
   }, [snake, foods]);
 
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <div className="w-64 h-64 grid grid-cols-10 gap-1">
+    <div className="w-screen h-screen flex justify-center items-center">
+      <div className="h-full w-full grid grid-cols-10 gap-1">
         {Array.from({ length: BOARD_SIZE * BOARD_SIZE }).map((_, index) => {
           const x = index % BOARD_SIZE;
           const y = Math.floor(index / BOARD_SIZE);
