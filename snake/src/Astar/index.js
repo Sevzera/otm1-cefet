@@ -1,4 +1,4 @@
-import { findSnakeAndFoods, dataMatrixToManhattanMatrix } from "./utils";
+import { findSnakeAndFoods, dataMatrixToManhattanMatrix } from "../utils/utils";
 import { setupAstar, aStar } from "./Astar";
 
 /* ASTAR */
