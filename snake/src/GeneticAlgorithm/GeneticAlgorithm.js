@@ -18,6 +18,8 @@ export const setDefaultValues = (matrix, snake, foods) => {
   FOODS = foods
 }
 
+
+
 const sortPopulation = (population) => {
   // Sort the population by fitness
   population.sort((a, b) => {
@@ -25,6 +27,8 @@ const sortPopulation = (population) => {
   })
   return population
 }
+
+
 
 const checkIfFoodEaten = (individual, position, food) => {
   // Get the row and column of the snake
@@ -46,6 +50,8 @@ const checkIfFoodEaten = (individual, position, food) => {
   }
   return [false, food]
 }
+
+
 
 const executeMove = (move, row, col) => {
   // If the move is up
@@ -84,6 +90,8 @@ const executeMove = (move, row, col) => {
   return [row, col]
 }
 
+
+
 const executeMoves = (individual) => {
   let auxSnake = SNAKE.slice()
   let row = auxSnake[0]
@@ -118,6 +126,8 @@ const executeMoves = (individual) => {
   // console.log("\n\n")
 }
 
+
+
 const generateMoves = (max_moves) => {
   let moves = []
 
@@ -133,6 +143,8 @@ const generateMoves = (max_moves) => {
 
   return moves
 }
+
+
 
 const fitness = (individual) => {
     // Extract the number of foods eaten and the path length from the individual
@@ -150,6 +162,8 @@ const fitness = (individual) => {
     return score
 }
 
+
+
 const linearMapping = (i) => {
   let min = 0
   let max = POPULATION_SIZE
@@ -157,6 +171,8 @@ const linearMapping = (i) => {
   let result = min + (max - min) * ((POPULATION_SIZE - i) / (POPULATION_SIZE - 1))
   return Math.round(result)
 }
+
+
 
 const selection = (population) => {
   population = sortPopulation(population)
@@ -199,6 +215,8 @@ const selection = (population) => {
   return parents
 }
 
+
+
 const crossover = (population) => {
     // Create a new population
     let new_population = []
@@ -223,8 +241,8 @@ const crossover = (population) => {
           moves = individual_2.moves
 
           // Get the second part of the moves
-          let second_half_1 = moves.slice(moves.length * (1 - CROSSOVER_RATE))
-          let second_half_2 = moves.slice(moves.length * (1 - CROSSOVER_RATE))
+          let second_half_1 = moves.slice(moves.length * CROSSOVER_RATE)
+          let second_half_2 = moves.slice(moves.length * CROSSOVER_RATE)
 
           // Combine the first and second parts of the moves
           let moves_1 = first_half_1.concat(second_half_2)
@@ -248,6 +266,8 @@ const crossover = (population) => {
 
     return new_population
 }
+
+
 
 const mutation = (population) => {
     // For each individual in the population
@@ -277,6 +297,8 @@ const mutation = (population) => {
     return population
 }
 
+
+
 const nextGeneration = (population) => {
   // Get the fitness for each individual in the population
   for (let i = 0; i < population.length; i++) {
@@ -302,6 +324,8 @@ const nextGeneration = (population) => {
 
   return population
 }    
+
+
 
 export const executeGeneticAlgorithm = (matrix, snake, foods) => {
   setDefaultValues(matrix, snake, foods)
@@ -332,5 +356,5 @@ export const executeGeneticAlgorithm = (matrix, snake, foods) => {
   }
   population = sortPopulation(population)
 
-  console.log(population)
+  console.log(population[0])
 }
