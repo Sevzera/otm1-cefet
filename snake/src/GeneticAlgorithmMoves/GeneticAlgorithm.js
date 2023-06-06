@@ -1,7 +1,7 @@
 import { Individual } from './GeneticIndividual.js'
 
 const POPULATION_SIZE = 20
-const MAX_GENERATIONS = 2000
+const MAX_GENERATIONS = 10000
 let actual_generation = 1
 const MAX_MOVES = 50
 
@@ -235,13 +235,13 @@ const crossover = (population) => {
 
           // Get the first part of the moves
           let first_half_1 = moves.slice(0, moves.length * CROSSOVER_RATE)
-          let first_half_2 = moves.slice(0, moves.length * CROSSOVER_RATE)
+          let second_half_1 = moves.slice(moves.length * CROSSOVER_RATE)
 
           // Get the moves from the second individual
           moves = individual_2.moves
 
           // Get the second part of the moves
-          let second_half_1 = moves.slice(moves.length * CROSSOVER_RATE)
+          let first_half_2 = moves.slice(0, moves.length * CROSSOVER_RATE)
           let second_half_2 = moves.slice(moves.length * CROSSOVER_RATE)
 
           // Combine the first and second parts of the moves
