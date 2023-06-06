@@ -25,7 +25,7 @@ const INITIAL_SNAKE = [
 ];
 const FOOD_COUNT = 25;
 const INITIAL_FOODS = getRandomFoods(INITIAL_SNAKE);
-const SPEED_IN_MS = 200;
+const SPEED_IN_MS = 50;
 
 const DIRECTION = {
   UP: "UP",

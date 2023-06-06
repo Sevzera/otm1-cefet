@@ -16,9 +16,10 @@ export const RunGeneticAlgorithWithFoods = (boardSize, headCoords, foodCoords) =
   const directions = [];
   let index = 0;
   let nextFood = result.foods_order[index];
+  let foodPosition = nextFood.position;``
   let currentCell = snakeAndFoods.snakeHead;
-  for (let i = 0; i < result.fitness; i++) {
-    const foodPosition = nextFood.position;
+  let stop = false;
+  while(stop === false) {
     if (currentCell[0] !== foodPosition[0]) {
       if (currentCell[0] > foodPosition[0]) {
         directions.push("UP");
@@ -40,7 +41,12 @@ export const RunGeneticAlgorithWithFoods = (boardSize, headCoords, foodCoords) =
       }
     } else {
       index++;
+      if (index === result.foods_order.length) {
+        stop = true;
+        break;
+      }
       nextFood = result.foods_order[index];
+      foodPosition = nextFood.position;
     }
   }
 
