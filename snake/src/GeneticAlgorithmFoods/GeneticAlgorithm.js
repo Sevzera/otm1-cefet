@@ -2,10 +2,10 @@ import {Individual} from './GeneticIndividual.js'
 import {dataMatrixToManhattanMatrix} from '../utils/utils.js'
 
 const POPULATION_SIZE = 100
-const MAX_GENERATIONS = 100
+const MAX_GENERATIONS = 2000
 
 const MUTATION_RATE = 0.05
-const CROSSOVER_RATE = 0.7
+const CROSSOVER_RATE = 0.5
 
 let GAME_MATRIX = null
 let SNAKE = null
@@ -301,5 +301,8 @@ export const executeGeneticAlgorithm = (data, snake, foods) => {
   }
   population = sortPopulation(population)
 
-  printIndividualsAndManhattan(population, 1)
+  // console.log("FINAL RESULT:")
+  // printIndividualsAndManhattan(population, 1)
+
+  return population[0]
 }

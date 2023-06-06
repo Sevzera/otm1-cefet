@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAstarDirections } from "./Astar/index";
+import { RunGeneticAlgorithWithFoods } from "./GeneticAlgorithmFoods/RunAlgorithm";
 
 const getRandomFoods = (INITIAL_SNAKE) => {
   const randomFoods = [];
@@ -47,6 +48,12 @@ const ASTAR_DIRECTIONS = getAstarDirections(
   INITIAL_FOODS
 );
 
+const GENETIC_ALGORITHM_DIRECTIONS = RunGeneticAlgorithWithFoods(
+  BOARD_SIZE,
+  INITIAL_SNAKE[0],
+  INITIAL_FOODS
+)
+
 const getNewHead = (currentHead, direction) => {
   let newHead = { ...currentHead };
 
@@ -90,7 +97,7 @@ const App = () => {
       setSnake((prevSnake) => {
         // const nextDirection = direction;
         // const nextDirection = RANDOM_DIRECTIONS.shift();
-        const nextDirection = ASTAR_DIRECTIONS.shift();
+        const nextDirection = GENETIC_ALGORITHM_DIRECTIONS.shift();
         const newHead = getNewHead(prevSnake[0], nextDirection);
         const newSnake = [...prevSnake];
         newSnake.unshift(newHead);
