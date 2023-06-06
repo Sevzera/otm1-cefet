@@ -95,10 +95,6 @@ const App = () => {
         const newSnake = [...prevSnake];
         newSnake.unshift(newHead);
 
-        if(snake.some((cell) => cell.x === newHead.x && cell.y === newHead.y)) {
-          console.log('Game Over');
-          clearInterval(moveSnake);}
-
         if (
           foods.some((food) => food.x === newHead.x && food.y === newHead.y)
         ) {
