@@ -61,7 +61,7 @@ export const findSnakeAndFoods = (data) => {
         ]
       }
 */
-export const dataMatrixToManhattanMatrix = (data, snakeHead) => {
+export const dataMatrixToManhattanMatrix = (data, object) => {
   const matrix = data.matrix;
   // console.log(matrix)
 
@@ -75,7 +75,7 @@ export const dataMatrixToManhattanMatrix = (data, snakeHead) => {
     manhattanMatrix.push([]);
     for (let j = 0; j < columns; j++) {
       manhattanMatrix[i].push(
-        manhattanDistance(i, j, snakeHead[0], snakeHead[1])
+        manhattanDistance(i, j, object[0], object[1])
       );
     }
   }

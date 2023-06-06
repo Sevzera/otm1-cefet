@@ -1,7 +1,5 @@
-const {findSnakeAndFoods} = require("./utils.js")
-// import { findSnakeAndFoods } from "./utils.js"
-const {executeGeneticAlgorithm} = require("../GeneticAlgorithm/GeneticAlgorithm.js")
-// import { executeGeneticAlgorithm } from "../GeneticAlgorithm/GeneticAlgorithm.js"
+import { findSnakeAndFoods } from './utils.js'
+import { executeGeneticAlgorithm } from '../GeneticAlgorithmFoods/GeneticAlgorithm.js'
 
 const mockData = {
   matrix: [ 
@@ -13,6 +11,6 @@ const mockData = {
 }
 
 const snakeAndFoods = findSnakeAndFoods(mockData)
-console.log(snakeAndFoods)
-executeGeneticAlgorithm(mockData.matrix, snakeAndFoods.snakeHead, snakeAndFoods.foods)
+console.log(snakeAndFoods, "\n")
+executeGeneticAlgorithm(mockData, snakeAndFoods.snakeHead, snakeAndFoods.foods)
 
