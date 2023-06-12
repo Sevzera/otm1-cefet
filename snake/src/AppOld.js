@@ -20,10 +20,6 @@ const getRandomFoods = (INITIAL_SNAKE) => {
 };
 
 const sumIndividualsCost = (individuals) => {
-
-  if (!Array.isArray(individuals))
-    return individuals.fitness;
-
   let sum = 0;
   for (let i = 0; i < individuals.length; i++) {
     sum += individuals[i].fitness;
@@ -38,12 +34,9 @@ const INITIAL_SNAKE = [
 
 const FOOD_COUNT = 2;
 const INITIAL_FOODS = getRandomFoods(INITIAL_SNAKE);
-let LAST_RUN_FOODS = INITIAL_FOODS;
 
 const TIMES_TO_RUN = 2;
 let ACTUAL_RUN = 1;
-let LAST_RUN = false
-let LAST_RUN_INDIVIDUAL = null, LAST_RUN_GENETIC_ALGORITHM_DIRECTIONS = null;
 
 const SPEED_IN_MS = 50;
 
@@ -118,12 +111,7 @@ const App = () => {
       setSnake((prevSnake) => {
         // const nextDirection = direction;
         // const nextDirection = RANDOM_DIRECTIONS.shift();
-        let nextDirection = null
-        if (LAST_RUN && LAST_RUN_GENETIC_ALGORITHM_DIRECTIONS !== null) {
-          nextDirection = LAST_RUN_GENETIC_ALGORITHM_DIRECTIONS.shift();
-        } else {
-          nextDirection = GENETIC_ALGORITHM_DIRECTIONS.shift();
-        }
+        const nextDirection = GENETIC_ALGORITHM_DIRECTIONS.shift();
         const newHead = getNewHead(prevSnake[0], nextDirection);
         const newSnake = [...prevSnake];
         newSnake.unshift(newHead);
@@ -145,15 +133,7 @@ const App = () => {
           const newFoods = generateNewRandomFoods(newSnake);
           [INDIVIDUAL, GENETIC_ALGORITHM_DIRECTIONS] = RunGeneticAlgorithWithFoods(BOARD_SIZE, newSnake[0], newFoods);
           INDIVIDUALS.push(INDIVIDUAL);
-          LAST_RUN_FOODS = LAST_RUN_FOODS.concat(newFoods);
           ACTUAL_RUN++;
-        } else if (LAST_RUN && LAST_RUN_GENETIC_ALGORITHM_DIRECTIONS === null) {
-          console.log("LAST_RUN_FOODS", LAST_RUN_FOODS);
-          setFoods(LAST_RUN_FOODS);
-          setSnake(INITIAL_SNAKE);
-          [LAST_RUN_INDIVIDUAL, LAST_RUN_GENETIC_ALGORITHM_DIRECTIONS] = RunGeneticAlgorithWithFoods(BOARD_SIZE, INITIAL_SNAKE[0], LAST_RUN_FOODS);
-        }  else if (foods.length === 0 && ACTUAL_RUN === TIMES_TO_RUN) {  
-          LAST_RUN = true;
         }
 
         return newSnake;
@@ -167,8 +147,7 @@ const App = () => {
     <div className="h-screen w-screen">
       <div className="absolute p-2 flex flex-col">
         <h1>Total cost: {sumIndividualsCost(INDIVIDUALS)}</h1>
-        <h1> Runs: {ACTUAL_RUN}</h1>
-        {LAST_RUN && LAST_RUN_GENETIC_ALGORITHM_DIRECTIONS && <h1> Last individual: {sumIndividualsCost(LAST_RUN_INDIVIDUAL)}</h1>}
+        <h1>Runs: {ACTUAL_RUN}</h1>
       </div>
       <div className="h-full w-full flex items-center justify-center">
         <div className="w-[900px] h-[900px]">
