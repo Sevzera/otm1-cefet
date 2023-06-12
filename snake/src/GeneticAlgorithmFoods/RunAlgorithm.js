@@ -2,42 +2,51 @@ import { executeGeneticAlgorithm } from "./GeneticAlgorithm";
 import { findSnakeAndFoods } from "../utils/utils";
 
 export const RunGeneticAlgorithWithFoods = (boardSize, headCoords, foodCoords) => {
+  if (!headCoords || !foodCoords || !boardSize) {
+    throw new Error("Missing parameters");
+  }
+  // console.log("headCoords: ", headCoords, "\nfoodCoords: ", foodCoords)
+
   const matrix = Array.from({ length: boardSize }, (_, i) =>
     Array.from({ length: boardSize }, (_, j) => ({
-      snakeHead: i === headCoords.x && j === headCoords.y,
+      snakeHead: j === headCoords.x && i === headCoords.y,
       food: foodCoords.some((food) => food.x === j && food.y === i),
     }))
   );
 
+  // console.log(matrix)
+
   const snakeAndFoods = findSnakeAndFoods({ matrix });
-  const result = executeGeneticAlgorithm({ matrix }, snakeAndFoods.snakeHead, snakeAndFoods.foods);
+  // console.log(snakeAndFoods)
+  const result = executeGeneticAlgorithm({ matrix }, snakeAndFoods.snakeHead[0], snakeAndFoods.foods);
   // console.log(result);
 
   const directions = [];
   let index = 0;
   let nextFood = result.foods_order[index];
-  let foodPosition = nextFood.position;``
-  let currentCell = snakeAndFoods.snakeHead;
+  let foodPosition = nextFood.position;
+  let currentCell = snakeAndFoods.snakeHead[0];
   let stop = false;
   while(stop === false) {
-    if (currentCell[0] !== foodPosition[0]) {
-      if (currentCell[0] > foodPosition[0]) {
+  //   console.log("Head: ", currentCell, "\nFood: ", foodPosition)
+    if (currentCell[1] !== foodPosition[1]) {
+      if (currentCell[1] > foodPosition[1]) {
         directions.push("UP");
-        currentCell[0]--;
+        currentCell[1]--;
       } 
-      else if (currentCell[0] < foodPosition[0]) {
+      else if (currentCell[1] < foodPosition[1]) {
         directions.push("DOWN");
-        currentCell[0]++;
+        currentCell[1]++;
       }
     } 
-    else if (currentCell[1] !== foodPosition[1]) {
-      if (currentCell[1] > foodPosition[1]) {
+    else if (currentCell[0] !== foodPosition[0]) {
+      if (currentCell[0] > foodPosition[0]) {
         directions.push("LEFT");
-        currentCell[1]--;
+        currentCell[0]--;
       }
-      else if (currentCell[1] < foodPosition[1]) {
+      else if (currentCell[0] < foodPosition[0]) {
         directions.push("RIGHT");
-        currentCell[1]++;
+        currentCell[0]++;
       }
     } else {
       index++;
@@ -50,7 +59,7 @@ export const RunGeneticAlgorithWithFoods = (boardSize, headCoords, foodCoords) =
     }
   }
 
-  console.log(directions)
+  // console.log(directions)
 
-  return directions;
+  return [result, directions];
 };

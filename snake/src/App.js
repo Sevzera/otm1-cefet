@@ -19,12 +19,25 @@ const getRandomFoods = (INITIAL_SNAKE) => {
   return randomFoods;
 };
 
+const sumIndividualsCost = (individuals) => {
+  let sum = 0;
+  for (let i = 0; i < individuals.length; i++) {
+    sum += individuals[i].fitness;
+  }
+  return sum;
+};
+
 const BOARD_SIZE = 50;
 const INITIAL_SNAKE = [
   { x: Math.floor(BOARD_SIZE / 2), y: Math.floor(BOARD_SIZE / 2) },
 ];
-const FOOD_COUNT = 25;
+
+const FOOD_COUNT = 2;
 const INITIAL_FOODS = getRandomFoods(INITIAL_SNAKE);
+
+const TIMES_TO_RUN = 2;
+let ACTUAL_RUN = 1;
+
 const SPEED_IN_MS = 50;
 
 const DIRECTION = {
@@ -42,17 +55,12 @@ while (RANDOM_DIRECTIONS.length < RANDOM_DIRECTIONS_LENGTH) {
   RANDOM_DIRECTIONS.push(DIRECTION_ARRAY[randomIndex]);
 }
 
-const ASTAR_DIRECTIONS = getAstarDirections(
+let [INDIVIDUAL, GENETIC_ALGORITHM_DIRECTIONS] = RunGeneticAlgorithWithFoods(
   BOARD_SIZE,
   INITIAL_SNAKE[0],
   INITIAL_FOODS
 );
-
-const GENETIC_ALGORITHM_DIRECTIONS = RunGeneticAlgorithWithFoods(
-  BOARD_SIZE,
-  INITIAL_SNAKE[0],
-  INITIAL_FOODS
-)
+const INDIVIDUALS = [INDIVIDUAL];
 
 const getNewHead = (currentHead, direction) => {
   let newHead = { ...currentHead };
@@ -74,6 +82,12 @@ const App = () => {
   const [snake, setSnake] = useState(INITIAL_SNAKE);
   const [foods, setFoods] = useState(INITIAL_FOODS);
   const [direction, setDirection] = useState(DIRECTION.RIGHT);
+
+  const generateNewRandomFoods = (snake) => {
+    const newFoods = getRandomFoods(snake);
+    setFoods(newFoods);
+    return newFoods;
+  };
 
   useEffect(() => {
     const handleKeyPress = (event) => {
@@ -114,6 +128,14 @@ const App = () => {
           newSnake.pop();
         }
 
+        if (foods.length === 0 && ACTUAL_RUN < TIMES_TO_RUN) {
+          console.log("NEW RUN");
+          const newFoods = generateNewRandomFoods(newSnake);
+          [INDIVIDUAL, GENETIC_ALGORITHM_DIRECTIONS] = RunGeneticAlgorithWithFoods(BOARD_SIZE, newSnake[0], newFoods);
+          INDIVIDUALS.push(INDIVIDUAL);
+          ACTUAL_RUN++;
+        }
+
         return newSnake;
       });
     }, SPEED_IN_MS);
@@ -122,34 +144,40 @@ const App = () => {
   }, [snake, foods]);
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
-      <div className="w-[900px] h-[900px]">
-        <div className="h-full w-full flex gap-1">
-          {Array.from({ length: BOARD_SIZE }).map((_, x) => {
-            return (
-              <div className="h-full w-full flex flex-col gap-1">
-                {Array.from({ length: BOARD_SIZE }).map((_, y) => {
-                  const isSnake = snake.some(
-                    (cell) => cell.x === x && cell.y === y
-                  );
-                  const isFood = foods.some(
-                    (cell) => cell.x === x && cell.y === y
-                  );
-                  return (
-                    <div
-                      className={`w-full h-full ${
-                        isSnake
-                          ? "bg-black"
-                          : isFood
-                          ? "bg-green-500"
-                          : "bg-gray-200"
-                      } border border-gray-300`}
-                    />
-                  );
-                })}
-              </div>
-            );
-          })}
+    <div className="h-screen w-screen">
+      <div className="absolute p-2 flex flex-col">
+        <h1>Total cost: {sumIndividualsCost(INDIVIDUALS)}</h1>
+        <h1>Runs: {ACTUAL_RUN}</h1>
+      </div>
+      <div className="h-full w-full flex items-center justify-center">
+        <div className="w-[900px] h-[900px]">
+          <div className="h-full w-full flex gap-1">
+            {Array.from({ length: BOARD_SIZE }).map((_, x) => {
+              return (
+                <div className="h-full w-full flex flex-col gap-1">
+                  {Array.from({ length: BOARD_SIZE }).map((_, y) => {
+                    const isSnake = snake.some(
+                      (cell) => cell.x === x && cell.y === y
+                    );
+                    const isFood = foods.some(
+                      (cell) => cell.x === x && cell.y === y
+                    );
+                    return (
+                      <div
+                        className={`w-full h-full ${
+                          isSnake
+                            ? "bg-black"
+                            : isFood
+                            ? "bg-green-500"
+                            : "bg-gray-200"
+                        } border border-gray-300`}
+                      />
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

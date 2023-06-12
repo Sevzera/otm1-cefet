@@ -6,25 +6,27 @@ export const findSnakeAndFoods = (data) => {
   const matrix = data.matrix;
   // console.log(matrix)
 
-  const lines = matrix.length;
-  const columns = matrix[0].length;
-
   let result = {
     snakeHead: [],
     foods: [],
   };
 
+  const lines = matrix.length;
+  const columns = matrix[0].length;
+
+  // Encontrando a cabeça da cobra e as comidas
   for (let i = 0; i < lines; i++) {
     for (let j = 0; j < columns; j++) {
       if (matrix[i][j].snakeHead) {
-        result.snakeHead = [i, j];
-      } else if (matrix[i][j].food) {
-        result.foods.push([i, j]);
+        result.snakeHead.push([j, i]);
+      }
+      if (matrix[i][j].food) {
+        result.foods.push([j, i]);
       }
     }
   }
 
-  // console.log("snakeHead:", snakeHead, "  |  ","food:", food)
+  // console.log("snakeHead:", result.snakeHead,"\nfood:", result.foods)
 
   return result;
 };
@@ -75,7 +77,7 @@ export const dataMatrixToManhattanMatrix = (data, object) => {
     manhattanMatrix.push([]);
     for (let j = 0; j < columns; j++) {
       manhattanMatrix[i].push(
-        manhattanDistance(i, j, object[0], object[1])
+        manhattanDistance(j, i, object[1], object[0])
       );
     }
   }

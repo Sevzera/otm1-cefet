@@ -2,7 +2,7 @@ import {Individual} from './GeneticIndividual.js'
 import {dataMatrixToManhattanMatrix} from '../utils/utils.js'
 
 const POPULATION_SIZE = 100
-const MAX_GENERATIONS = 5000
+const MAX_GENERATIONS = 10000
 
 const MUTATION_RATE = 0.02
 const CROSSOVER_RATE = 0.6
@@ -15,6 +15,10 @@ const setDefaultValues = (data, snake, foods) => {
   GAME_MATRIX = data.matrix
   SNAKE = snake
 
+  if (FOODS.length > 0) {
+    FOODS = []
+  }
+
   for (let i = 0; i < foods.length; i++) {
     FOODS.push({
       position: foods[i],
@@ -25,7 +29,7 @@ const setDefaultValues = (data, snake, foods) => {
 
 
 
-const printIndividualsAndManhattan = (individuals, quantity=0) => {
+const printIndividualsAndManhattan = (individuals, quantity=0, showFoods=true) => {
   let howManyToPrint = individuals.length
   if (quantity > 0) {
     howManyToPrint = quantity
@@ -34,10 +38,12 @@ const printIndividualsAndManhattan = (individuals, quantity=0) => {
   for (let i = 0; i < howManyToPrint; i++) {
     let individual = individuals[i]
     console.log(individual)
-    for (let j = 0; j < individual.foods_order.length; j++) {
-      let food = individual.foods_order[j]
-      console.log(`Food ${j}:`, food.position)
-      console.log("   ", food.manhattan_distance)
+    if(showFoods) {
+      for (let j = 0; j < individual.foods_order.length; j++) {
+        let food = individual.foods_order[j]
+        console.log(`Food ${j}:`, food.position)
+        console.log("   ", food.manhattan_distance)
+      }
     }
     console.log("\n")
   }
@@ -275,6 +281,8 @@ const nextGeneration = (population) => {
 
 
 export const executeGeneticAlgorithm = (data, snake, foods) => {
+  console.log("STARTING GENETIC ALGORITHM")
+  console.log("snakeHead: ", snake, "\nfoodCoords: ", foods)
   setDefaultValues(data, snake, foods)
 
   if (GAME_MATRIX == null || SNAKE == null || FOODS == null) {
@@ -301,8 +309,8 @@ export const executeGeneticAlgorithm = (data, snake, foods) => {
   }
   population = sortPopulation(population)
 
-  // console.log("FINAL RESULT:")
-  // printIndividualsAndManhattan(population, 1)
+  console.log("FINAL RESULT:")
+  printIndividualsAndManhattan(population, 1, false)
 
   return population[0]
 }
