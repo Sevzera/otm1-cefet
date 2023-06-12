@@ -36,11 +36,11 @@ const INITIAL_SNAKE = [
   { x: Math.floor(BOARD_SIZE / 2), y: Math.floor(BOARD_SIZE / 2) },
 ];
 
-const FOOD_COUNT = 2;
+const FOOD_COUNT = 10;
 const INITIAL_FOODS = getRandomFoods(INITIAL_SNAKE);
 let LAST_RUN_FOODS = INITIAL_FOODS;
 
-const TIMES_TO_RUN = 2;
+const TIMES_TO_RUN = 10;
 let ACTUAL_RUN = 1;
 let LAST_RUN = false
 let LAST_RUN_INDIVIDUAL = null, LAST_RUN_GENETIC_ALGORITHM_DIRECTIONS = null;
