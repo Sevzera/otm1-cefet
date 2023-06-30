@@ -14,7 +14,7 @@ const ARRAY_OF_FOODS = [
   [24, 37], [3, 46] , [29, 4] , [17, 22], [43, 30],
   [8, 15] , [26, 41], [38, 19], [11, 33], [31, 2] ,
 ];
-const FOOD_COUNT = 25; //5, 25, 50
+const FOOD_COUNT = 50; //5, 25, 50
 
 const getFoods = () => {
   return ARRAY_OF_FOODS.slice(0, FOOD_COUNT).map((food) => {
@@ -26,7 +26,7 @@ const BOARD_SIZE = 50;
 const INITIAL_SNAKE = [
   { x: 25, y: 25 },
 ];
-const INITIAL_FOODS = getFoods(INITIAL_SNAKE);
+const INITIAL_FOODS = getFoods();
 const SPEED_IN_MS = 50;
 
 const DIRECTION = {

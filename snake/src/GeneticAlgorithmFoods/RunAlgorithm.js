@@ -18,7 +18,7 @@ export const RunGeneticAlgorithWithFoods = (boardSize, headCoords, foodCoords) =
 
   const snakeAndFoods = findSnakeAndFoods({ matrix });
   // console.log(snakeAndFoods)
-  const result = executeGeneticAlgorithm({ matrix }, snakeAndFoods.snakeHead[0], snakeAndFoods.foods);
+  const result = executeGeneticAlgorithm({ matrix }, [headCoords.x, headCoords.y], snakeAndFoods.foods);
   // console.log(result);
 
   const directions = [];
