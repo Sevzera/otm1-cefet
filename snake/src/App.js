@@ -27,7 +27,7 @@ const INITIAL_SNAKE = [
   { x: 25, y: 25 },
 ];
 const INITIAL_FOODS = getFoods();
-const SPEED_IN_MS = 50;
+const SPEED_IN_MS = 10;
 
 const DIRECTION = {
   UP: "UP",
@@ -138,7 +138,10 @@ const App = () => {
                           ? "bg-black"
                           : isFood
                           ? "bg-green-500"
+                          : INITIAL_SNAKE[0].x === x && INITIAL_SNAKE[0].y === y
+                          ? "bg-red-500"
                           : "bg-gray-200"
+                          
                       } border border-gray-300`}
                     />
                   );
