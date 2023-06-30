@@ -11,9 +11,16 @@ let GAME_MATRIX = null
 let SNAKE = null
 let FOODS = []
 
+let SNAKE_OBJECT = null
+
 const setDefaultValues = (data, snake, foods) => {
   GAME_MATRIX = data.matrix
   SNAKE = snake
+
+  SNAKE_OBJECT = {
+    position: snake,
+    manhattan_distance: dataMatrixToManhattanMatrix(data, snake)
+  }
 
   if (FOODS.length > 0) {
     FOODS = []
@@ -151,8 +158,8 @@ const pmx = (parent1, parent2) => {
   let child1 = []
   let child2 = []
 
-  let start = Math.floor(Math.random() * parent1.length)
-  let end = Math.floor(Math.random() * parent1.length)
+  let start = Math.floor(Math.random() * (parent1.length-1))
+  let end = Math.floor(Math.random() * (parent1.length-1))
   if (start > end) {
     let aux = start
     start = end
@@ -228,8 +235,8 @@ const mutation = (children) => {
     let individual = children[i]
     let odd = Math.random()
     if (odd <= MUTATION_RATE) {
-      let index1 = Math.floor(Math.random() * individual.foods_order.length)
-      let index2 = Math.floor(Math.random() * individual.foods_order.length)
+      let index1 = Math.floor(Math.random() * (individual.foods_order.length-1))
+      let index2 = Math.floor(Math.random() * (individual.foods_order.length-1))
       let aux = individual.foods_order[index1]
       individual.foods_order[index1] = individual.foods_order[index2]
       individual.foods_order[index2] = aux
