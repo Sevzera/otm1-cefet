@@ -1,10 +1,10 @@
 import numpy as np
 from data import Data
 class Snake:
-    def __init__(self, number_of_foods=300):
-        self.snake_start_position = [[50,50]]
+    def __init__(self, number_of_foods=50):
+        self.snake_start_position = [[25,25]]
         self.number_of_foods = number_of_foods
-        self.foods = Data().ARRAY_OF_FOODS_100x100
+        self.foods = Data().ARRAY_OF_FOODS_50x50_150
         self.cost_matrix = []
 
     def manhattan_distance(self, x1, y1, x2, y2):
