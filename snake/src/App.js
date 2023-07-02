@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { getAstarDirections } from "./Astar/index";
 import { RunGeneticAlgorithWithFoods } from "./GeneticAlgorithmFoods/RunAlgorithm";
 
-import { ARRAY_OF_FOODS_50x50,ARRAY_OF_FOODS_100x100 } from "./data.js";	
+import { ARRAY_OF_FOODS_50x50_150 } from "./data.js";
 
-const FOOD_COUNT = 25; //5, 25, 50
+const FOOD_COUNT = 80; //5, 25, 50, 60, 70, 80 (1h no simplex)
 
 const getFoods = () => {
   let ARRAY_OF_FOODS = [];
-  if(BOARD_SIZE === 50) ARRAY_OF_FOODS = ARRAY_OF_FOODS_50x50;
-  else if(BOARD_SIZE === 100) ARRAY_OF_FOODS = ARRAY_OF_FOODS_100x100;
+  ARRAY_OF_FOODS = ARRAY_OF_FOODS_50x50_150;
   return ARRAY_OF_FOODS.slice(0, FOOD_COUNT).map((food) => {
     return { x: food[0], y: food[1] };
   });
 };
 
-const BOARD_SIZE = 100;
-const INITIAL_SNAKE = [
-  { x: BOARD_SIZE/2, y: BOARD_SIZE/2 },
-];
-const INITIAL_FOODS = getFoods(INITIAL_SNAKE);
-const SPEED_IN_MS = 50;
+const BOARD_SIZE = 50;
+const INITIAL_SNAKE = [{ x: BOARD_SIZE/2, y: BOARD_SIZE/2 }];
+const INITIAL_FOODS = getFoods();
+const SPEED_IN_MS = 10;
 
 const DIRECTION = {
   UP: "UP",
@@ -130,6 +128,8 @@ const App = () => {
                           ? "bg-black"
                           : isFood
                           ? "bg-green-500"
+                          : INITIAL_SNAKE[0].x === x && INITIAL_SNAKE[0].y === y
+                          ? "bg-red-500"
                           : "bg-gray-200"
                       } border border-gray-300`}
                     />

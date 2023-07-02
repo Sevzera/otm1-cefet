@@ -5,7 +5,7 @@ path = "H:/Development/ILOGCplex/cplex/bin/x64_win64/cplex.exe"
 cost_matrix = []
 
 ##-------------------------LEITURA DA INSTÂNCIA--------------------##
-number_of_foods = 20
+number_of_foods = 80
 snake = Snake(number_of_foods=number_of_foods)
 cost_matrix = snake.get_cost_matrix()
 n = len(cost_matrix)
@@ -36,16 +36,16 @@ def func_objetivo(modelo):
 modelo.objetivo = pyEnv.Objective(rule=func_objetivo,sense=pyEnv.minimize)
 
 ##------------------------------------------------------##
-  #So sai 1 caminho de cada cidade, menos da ultima
+  #So sai 1 caminho de cada cidade
 def rule_rest1(modelo,M):
-    return sum(modelo.x[i,M] for i in modelo.N if (i!=M and i<n-1)) == 1
+    return sum(modelo.x[i,M] for i in modelo.N if i!=M) == 1
 
 modelo.rest1 = pyEnv.Constraint(modelo.M,rule=rule_rest1)
 
 ##------------------------------------------------------##
-  #So entra 1 caminho em cada cidade menos na primeira
+  #So entra 1 caminho em cada cidade
 def rule_rest2(modelo,N):
-    return sum(modelo.x[N,j] for j in modelo.M if (j!=N and j!=1)) == 1
+    return sum(modelo.x[N,j] for j in modelo.M if j!=N) == 1
 
 modelo.rest2 = pyEnv.Constraint(modelo.N,rule=rule_rest2)
 
@@ -59,13 +59,6 @@ def rule_rest3(modelo,i,j):
         return modelo.u[i] - modelo.u[i] == 0
 
 modelo.rest3 = pyEnv.Constraint(modelo.U,modelo.N,rule=rule_rest3)
-
-##------------------------------------------------------##
-  #Nao entra caminho na primeira cidade
-def rule_rest4(modelo,N):
-    return sum(modelo.x[1,j] for j in modelo.M if (j!=1)) == 0
-
-modelo.rest4 = pyEnv.Constraint(modelo.N, rule=rule_rest4)
 
 ##-------------------------RESOLUCAO DO MODELO--------------------##
 solver = pyEnv.SolverFactory('cplex',executable=path)

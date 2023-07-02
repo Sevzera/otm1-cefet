@@ -15,6 +15,6 @@ const generateRandomFoodsArray = (boardSize, foodsNumber, snakeOrigin) => {
   return foodsArray;
 };
 
-const randomFoodsArray = generateRandomFoodsArray(100, 300, [25, 25]);
+const randomFoodsArray = generateRandomFoodsArray(50, 150, [25, 25]);
 
 return console.log(JSON.stringify(randomFoodsArray));

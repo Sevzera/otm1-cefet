@@ -16,7 +16,8 @@ let SNAKE_OBJECT = null
 const setDefaultValues = (data, snake, foods) => {
   GAME_MATRIX = data.matrix
   SNAKE = snake
-
+  console.log("SNAKE: ", SNAKE)
+  
   SNAKE_OBJECT = {
     position: snake,
     manhattan_distance: dataMatrixToManhattanMatrix(data, snake)
@@ -66,6 +67,8 @@ const generateRandomPath = (foods) => {
     path.push(auxFoods[index])
     auxFoods.splice(index, 1)
   }
+  path.push(SNAKE_OBJECT)
+  // console.log(path)
   return path
 }
 
