@@ -2,30 +2,20 @@ import React, { useState, useEffect } from "react";
 import { getAstarDirections } from "./Astar/index";
 import { RunGeneticAlgorithWithFoods } from "./GeneticAlgorithmFoods/RunAlgorithm";
 
-const ARRAY_OF_FOODS = [
-  [13, 47], [29, 2] , [6, 34] , [41, 19], [8, 11] , 
-  [14, 23], [36, 45], [9, 7]  , [28, 33], [17, 39],
-  [3, 18] , [41, 4] , [26, 11], [35, 25], [48, 32],
-  [21, 13], [37, 22], [10, 46], [44, 1] , [15, 29],
-  [2, 38] , [40, 16], [24, 5] , [8, 31] , [49, 20],
-  [7, 42] , [19, 16], [33, 28], [25, 6] , [12, 35],
-  [30, 23], [1, 44] , [46, 11], [21, 39], [14, 17],
-  [48, 32], [5, 20] , [36, 8] , [9, 25] , [40, 13],
-  [24, 37], [3, 46] , [29, 4] , [17, 22], [43, 30],
-  [8, 15] , [26, 41], [38, 19], [11, 33], [31, 2] ,
-];
-const FOOD_COUNT = 50; //5, 25, 50
+import { ARRAY_OF_FOODS_50x50_150 } from "./data.js";
+
+const FOOD_COUNT = 80; //5, 25, 50, 60, 70, 80 (1h no simplex)
 
 const getFoods = () => {
+  let ARRAY_OF_FOODS = [];
+  ARRAY_OF_FOODS = ARRAY_OF_FOODS_50x50_150;
   return ARRAY_OF_FOODS.slice(0, FOOD_COUNT).map((food) => {
     return { x: food[0], y: food[1] };
   });
 };
 
 const BOARD_SIZE = 50;
-const INITIAL_SNAKE = [
-  { x: 25, y: 25 },
-];
+const INITIAL_SNAKE = [{ x: BOARD_SIZE/2, y: BOARD_SIZE/2 }];
 const INITIAL_FOODS = getFoods();
 const SPEED_IN_MS = 10;
 
@@ -141,7 +131,6 @@ const App = () => {
                           : INITIAL_SNAKE[0].x === x && INITIAL_SNAKE[0].y === y
                           ? "bg-red-500"
                           : "bg-gray-200"
-                          
                       } border border-gray-300`}
                     />
                   );
