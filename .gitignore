@@ -2,3 +2,5 @@
 .pnp.*
 
 node_modules
+
+*.pyc
