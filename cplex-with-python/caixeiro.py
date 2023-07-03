@@ -5,7 +5,7 @@ path = "H:/Development/ILOGCplex/cplex/bin/x64_win64/cplex.exe"
 cost_matrix = []
 
 ##-------------------------LEITURA DA INSTÂNCIA--------------------##
-number_of_foods = 80
+number_of_foods = 35
 snake = Snake(number_of_foods=number_of_foods)
 cost_matrix = snake.get_cost_matrix()
 n = len(cost_matrix)
@@ -64,8 +64,8 @@ modelo.rest3 = pyEnv.Constraint(modelo.U,modelo.N,rule=rule_rest3)
 solver = pyEnv.SolverFactory('cplex',executable=path)
 resultado = solver.solve(modelo,tee = True)
 print('\n-------------------------\n')
-#modelo.pprint()
-#modelo.objetivo()
+# modelo.pprint()
+# modelo.objetivo()
 print(resultado)
 
 ##-------------------------PRINT DAS VARIAVEIS DE DECISAO ESCOLHIDAS--------------------##
