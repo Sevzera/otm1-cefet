@@ -7,7 +7,7 @@ ap.add_argument("-p", "--foods", required=True,
 args = vars(ap.parse_args())
 
 HIGH_COST = 1000
-FOODS_IN_GAME = args["foods"]
+FOODS_IN_GAME = int(args["foods"])
 
 def main():
     snake = Snake(number_of_foods=FOODS_IN_GAME)
