@@ -7,6 +7,8 @@ export const RunGeneticAlgorithWithFoods = (boardSize, headCoords, foodCoords) =
   }
   // console.log("headCoords: ", headCoords, "\nfoodCoords: ", foodCoords)
 
+  const startTime = new Date().getTime();
+
   const matrix = Array.from({ length: boardSize }, (_, i) =>
     Array.from({ length: boardSize }, (_, j) => ({
       snakeHead: j === headCoords.x && i === headCoords.y,
@@ -20,6 +22,10 @@ export const RunGeneticAlgorithWithFoods = (boardSize, headCoords, foodCoords) =
   // console.log(snakeAndFoods)
   const result = executeGeneticAlgorithm({ matrix }, [headCoords.x, headCoords.y], snakeAndFoods.foods);
   // console.log(result);
+
+  // for(let i = 0; i < result.foods_order.length; i++) {
+  //   console.log(result.foods_order[i].position);
+  // }
 
   const directions = [];
   let index = 0;
@@ -59,6 +65,9 @@ export const RunGeneticAlgorithWithFoods = (boardSize, headCoords, foodCoords) =
     }
   }
 
+  const endTime = new Date().getTime();
+
+  console.log("Time: ", ((endTime - startTime) / 1000));
   // console.log(directions)
 
   return [result, directions];

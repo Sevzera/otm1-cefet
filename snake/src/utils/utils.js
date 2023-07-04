@@ -76,13 +76,74 @@ export const dataMatrixToManhattanMatrix = (data, object) => {
   for (let i = 0; i < lines; i++) {
     manhattanMatrix.push([]);
     for (let j = 0; j < columns; j++) {
-      manhattanMatrix[i].push(
-        manhattanDistance(j, i, object[1], object[0])
-      );
+      manhattanMatrix[i].push(manhattanDistance(j, i, object[1], object[0]));
     }
   }
 
   // console.log(manhattanMatrix)
 
   return manhattanMatrix;
+};
+
+export const translateBestSolution = (bestSolution, foods, snake) => {
+  const directions = [];
+  let stop = false;
+  let index = 0;
+
+  let currentSolutionCell = bestSolution[0];
+  console.log(currentSolutionCell);
+
+  let currentPosition = 0;
+  if (currentSolutionCell[0] == 1)
+    currentPosition = { x: snake[0].x, y: snake[0].y };
+  else currentPosition = foods[currentSolutionCell[0] - 2];
+
+  let foodPosition = 0;
+  if (currentSolutionCell[1] == 1)
+    foodPosition = { x: snake[0].x, y: snake[0].y };
+  else foodPosition = foods[currentSolutionCell[1] - 2];
+  console.log("Head: ", currentPosition, "\nFood: ", foodPosition);
+
+  while (stop == false) {
+    if (currentPosition.y !== foodPosition.y) {
+      if (currentPosition.y > foodPosition.y) {
+        directions.push("UP");
+        currentPosition.y--;
+      } else if (currentPosition.y < foodPosition.y) {
+        directions.push("DOWN");
+        currentPosition.y++;
+      }
+    } else if (currentPosition.x !== foodPosition.x) {
+      if (currentPosition.x > foodPosition.x) {
+        directions.push("LEFT");
+        currentPosition.x--;
+      } else if (currentPosition.x < foodPosition.x) {
+        directions.push("RIGHT");
+        currentPosition.x++;
+      }
+    } else {
+      index++;
+      currentSolutionCell = bestSolution.find((element) => {
+        if (element[0] == currentSolutionCell[1]) return element;
+      });
+
+      console.log(currentSolutionCell);
+
+      if (index == bestSolution.length) {
+        stop = true;
+        break;
+      }
+
+      if (currentSolutionCell[0] == 1)
+        currentPosition = { x: snake[0].x, y: snake[0].y };
+      else currentPosition = foods[currentSolutionCell[0] - 2];
+
+      if (currentSolutionCell[1] == 1)
+        foodPosition = { x: snake[0].x, y: snake[0].y };
+      else foodPosition = foods[currentSolutionCell[1] - 2];
+      console.log("Head: ", currentPosition, "\nFood: ", foodPosition);
+    }
+  }
+  console.log(directions);
+  return directions;
 };
