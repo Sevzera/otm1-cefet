@@ -2,10 +2,10 @@ import {Individual} from './GeneticIndividual.js'
 import {dataMatrixToManhattanMatrix} from '../utils/utils.js'
 
 const POPULATION_SIZE = 300
-const MAX_GENERATIONS = 10000
+const MAX_GENERATIONS = 30000
 
-const MUTATION_RATE = 0.03
-const CROSSOVER_RATE = 0.6
+const MUTATION_RATE = 0.05
+const CROSSOVER_RATE = 0.7
 
 let GAME_MATRIX = null
 let SNAKE = null

@@ -1,0 +1,167 @@
+Welcome to IBM(R) ILOG(R) CPLEX(R) Interactive Optimizer 22.1.1.0
+  with Simplex, Mixed Integer & Barrier Optimizers
+5725-A06 5725-A29 5724-Y48 5724-Y49 5724-Y54 5724-Y55 5655-Y21
+Copyright IBM Corp. 1988, 2022.  All Rights Reserved.
+
+Type 'help' for a list of available commands.
+Type 'help' followed by a command name for more
+information on commands.
+
+CPLEX> Logfile 'cplex.log' closed.
+Logfile 'C:\Users\Victor\AppData\Local\Temp\tmpxfmhh8wu.cplex.log' open.
+CPLEX> Problem 'C:\Users\Victor\AppData\Local\Temp\tmpdf54rtah.pyomo.lp' read.
+Read time = 0.00 sec. (0.05 ticks)
+CPLEX> Problem name         : C:\Users\Victor\AppData\Local\Temp\tmpdf54rtah.pyomo.lp
+Objective sense      : Minimize
+Variables            :     463  [Fix: 1,  Binary: 441,  General Integer: 21]
+Objective nonzeros   :     441
+Linear constraints   :     462  [Less: 400,  Equal: 62]
+  Nonzeros           :    2040
+  RHS nonzeros       :     442
+
+Variables            : Min LB: 0.000000         Max UB: 20.00000
+Objective nonzeros   : Min   : 2.000000         Max   : 9999.000
+Linear constraints   :
+  Nonzeros           : Min   : 1.000000         Max   : 21.00000
+  RHS nonzeros       : Min   : 1.000000         Max   : 20.00000
+CPLEX> Version identifier: 22.1.1.0 | 2022-11-27 | 9160aff4d
+Tried aggregator 1 time.
+MIP Presolve eliminated 20 rows and 23 columns.
+MIP Presolve modified 40 coefficients.
+Reduced MIP has 442 rows, 440 columns, and 2020 nonzeros.
+Reduced MIP has 420 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (1.35 ticks)
+Probing time = 0.00 sec. (1.92 ticks)
+Tried aggregator 1 time.
+Detecting symmetries...
+Reduced MIP has 442 rows, 440 columns, and 2020 nonzeros.
+Reduced MIP has 420 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (1.63 ticks)
+Probing time = 0.00 sec. (1.95 ticks)
+Clique table members: 232.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 16 threads.
+Root relaxation solution time = 0.00 sec. (0.74 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                          742.0000        0.0000           100.00%
+      0     0      223.8095    41      742.0000      223.8095       41   69.84%
+      0     0      260.1905    60      742.0000      Cuts: 50       86   64.93%
+      0     0      262.0000    53      742.0000      Cuts: 45      122   64.69%
+      0     0      262.0000    68      742.0000      Cuts: 21      138   64.69%
+      0     0      262.0000     8      742.0000   ZeroHalf: 2      139   64.69%
+*     0+    0                          266.0000      262.0000             1.50%
+Detecting symmetries...
+
+Repeating presolve.
+Tried aggregator 2 times.
+MIP Presolve eliminated 331 rows and 348 columns.
+MIP Presolve modified 8 coefficients.
+Aggregator did 4 substitutions.
+Reduced MIP has 107 rows, 88 columns, and 340 nonzeros.
+Reduced MIP has 68 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.55 ticks)
+Probing fixed 0 vars, tightened 2 bounds.
+Probing time = 0.00 sec. (0.09 ticks)
+Cover probing fixed 0 vars, tightened 32 bounds.
+Tried aggregator 1 time.
+Detecting symmetries...
+MIP Presolve eliminated 3 rows and 0 columns.
+MIP Presolve modified 131 coefficients.
+Reduced MIP has 104 rows, 88 columns, and 334 nonzeros.
+Reduced MIP has 68 binaries, 20 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.25 ticks)
+Represolve time = 0.00 sec. (1.40 ticks)
+Probing fixed 2 vars, tightened 2 bounds.
+Probing time = 0.00 sec. (0.15 ticks)
+Cover probing fixed 0 vars, tightened 25 bounds.
+Clique table members: 222.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 16 threads.
+Root relaxation solution time = 0.00 sec. (0.32 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                          266.0000      262.0000             1.50%
+      0     0      262.0000    41      266.0000      262.0000      185    1.50%
+      0     0      262.0000    12      266.0000      Cuts: 13      203    1.50%
+      0     0      262.0000    13      266.0000      Cuts: 22      210    1.50%
+      0     0      262.0000    14      266.0000      Cuts: 10      215    1.50%
+      0     0        cutoff            266.0000      266.0000      215    0.00%
+Elapsed time = 0.14 sec. (51.65 ticks, tree = 0.01 MB, solutions = 2)
+
+Clique cuts applied:  6
+Implied bound cuts applied:  3
+Multi commodity flow cuts applied:  4
+Gomory fractional cuts applied:  1
+
+Root node processing (before b&c):
+  Real time             =    0.14 sec. (51.66 ticks)
+Parallel b&c, 16 threads:
+  Real time             =    0.00 sec. (0.00 ticks)
+  Sync time (average)   =    0.00 sec.
+  Wait time (average)   =    0.00 sec.
+                          ------------
+Total (root+branch&cut) =    0.14 sec. (51.66 ticks)
+
+Solution pool: 2 solutions saved.
+
+MIP - Integer optimal solution:  Objective =  2.6600000000e+02
+Solution time =    0.14 sec.  Iterations = 215  Nodes = 0
+Deterministic time = 51.66 ticks  (366.39 ticks/sec)
+
+CPLEX> Incumbent solution written to file 'C:\Users\Victor\AppData\Local\Temp\tmp2bo42ygz.cplex.sol'.
+CPLEX> 
+-------------------------
+
+
+Problem:
+- Name: tmpdf54rtah
+  Lower bound: 266.0
+  Upper bound: 266.0
+  Number of objectives: 1
+  Number of constraints: 462
+  Number of variables: 463
+  Number of nonzeros: 2040
+  Sense: minimize
+Solver:
+- Status: ok
+  User time: 0.14
+  Termination condition: optimal
+  Termination message: MIP - Integer optimal solution\x3a Objective = 2.6600000000e+02
+  Statistics:
+    Branch and bound:
+      Number of bounded subproblems: 0
+      Number of created subproblems: 0
+  Error rc: 0
+  Time: 0.33037662506103516
+Solution:
+- number of solutions: 0
+  number of solutions displayed: 0
+
+(1, 2) -- 1.0
+(2, 5) -- 1.0
+(3, 4) -- 1.0
+(4, 18) -- 1.0
+(5, 21) -- 1.0
+(6, 12) -- 1.0
+(7, 14) -- 1.0
+(8, 11) -- 1.0
+(9, 10) -- 1.0
+(10, 3) -- 1.0
+(11, 17) -- 1.0
+(12, 7) -- 1.0
+(13, 19) -- 1.0
+(14, 13) -- 1.0
+(15, 16) -- 1.0
+(16, 6) -- 1.0
+(17, 1) -- 1.0
+(18, 20) -- 1.0
+(19, 9) -- 1.0
+(20, 8) -- 1.0
+(21, 15) -- 1.0
