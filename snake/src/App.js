@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { getAstarDirections } from "./Astar/index";
+
 import { RunGeneticAlgorithWithFoods } from "./GeneticAlgorithmFoods/RunAlgorithm";
+import { translateBestSolution } from "./utils/utils";
 
-import { ARRAY_OF_FOODS_50x50_150 } from "./data.js";
+import { ARRAY_OF_FOODS_50x50_150, best_solution_20, best_solution_35, best_solution_50, best_solution_65, best_solution_80 } from "./data.js";
 
-const FOOD_COUNT = 80; //5, 25, 50, 60, 70, 80 (1h no simplex)
+const FOOD_COUNT = 35; //20, 35, 50, 65, 80 (1h no simplex)
+
+const BEST_SOLUTION = true
 
 const getFoods = () => {
   let ARRAY_OF_FOODS = [];
@@ -27,18 +30,29 @@ const DIRECTION = {
 };
 const DIRECTION_ARRAY = Object.values(DIRECTION);
 
-const RANDOM_DIRECTIONS = [];
-const RANDOM_DIRECTIONS_LENGTH = 100;
-while (RANDOM_DIRECTIONS.length < RANDOM_DIRECTIONS_LENGTH) {
-  const randomIndex = Math.floor(Math.random() * DIRECTION_ARRAY.length);
-  RANDOM_DIRECTIONS.push(DIRECTION_ARRAY[randomIndex]);
-}
+// const RANDOM_DIRECTIONS = [];
+// const RANDOM_DIRECTIONS_LENGTH = 100;
+// while (RANDOM_DIRECTIONS.length < RANDOM_DIRECTIONS_LENGTH) {
+//   const randomIndex = Math.floor(Math.random() * DIRECTION_ARRAY.length);
+//   RANDOM_DIRECTIONS.push(DIRECTION_ARRAY[randomIndex]);
+// }
 
-const [INDIVIDUAL, GENETIC_ALGORITHM_DIRECTIONS] = RunGeneticAlgorithWithFoods(
-  BOARD_SIZE,
-  INITIAL_SNAKE[0],
-  INITIAL_FOODS
-);
+let RESULT_DIRECTIONS = [];
+
+if (BEST_SOLUTION) {
+  if (FOOD_COUNT === 20) RESULT_DIRECTIONS = translateBestSolution(best_solution_20, INITIAL_FOODS, INITIAL_SNAKE);
+  if (FOOD_COUNT === 35) RESULT_DIRECTIONS = translateBestSolution(best_solution_35, INITIAL_FOODS, INITIAL_SNAKE);
+  if (FOOD_COUNT === 50) RESULT_DIRECTIONS = translateBestSolution(best_solution_50, INITIAL_FOODS, INITIAL_SNAKE);
+  if (FOOD_COUNT === 65) RESULT_DIRECTIONS = translateBestSolution(best_solution_65, INITIAL_FOODS, INITIAL_SNAKE);
+  if (FOOD_COUNT === 80) RESULT_DIRECTIONS = translateBestSolution(best_solution_80, INITIAL_FOODS, INITIAL_SNAKE);
+} else {
+  const [INDIVIDUAL, GENETIC_ALGORITHM_DIRECTIONS] = RunGeneticAlgorithWithFoods(
+    BOARD_SIZE,
+    INITIAL_SNAKE[0],
+    INITIAL_FOODS
+  );
+  RESULT_DIRECTIONS = GENETIC_ALGORITHM_DIRECTIONS;
+}
 
 const getNewHead = (currentHead, direction) => {
   let newHead = { ...currentHead };
@@ -83,7 +97,7 @@ const App = () => {
       setSnake((prevSnake) => {
         // const nextDirection = direction;
         // const nextDirection = RANDOM_DIRECTIONS.shift();
-        const nextDirection = GENETIC_ALGORITHM_DIRECTIONS.shift();
+        const nextDirection = RESULT_DIRECTIONS.shift();
         const newHead = getNewHead(prevSnake[0], nextDirection);
         const newSnake = [...prevSnake];
         newSnake.unshift(newHead);
