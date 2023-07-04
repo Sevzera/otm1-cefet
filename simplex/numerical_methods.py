@@ -52,6 +52,7 @@ def gaus_method(coeff, stakes):
     while c < a.get_size_columns():
         # Find a pivot for column c
         pivot_line_index = 0
+        pivot_overflow = False
         while pivot_line_index >= 0:
             pivot = a.get_item(pivot_line_index, c)
             if pivot != 0 and pivot_line_index not in row_already_used_as_pivot:
@@ -59,6 +60,12 @@ def gaus_method(coeff, stakes):
                 break
             else:
                 pivot_line_index += 1
+                if pivot_line_index >= a.get_size_columns():
+                    pivot_overflow = True
+                    break
+        
+        if pivot_overflow:
+            break
 
         # Find multipliers for other lines
         multipliers.append([])
@@ -89,7 +96,10 @@ def gaus_method(coeff, stakes):
         for j in range(a.get_size_columns()):
             sum += a.get_item(i, j) * X[j]
         sum = b.get_item(i) - sum
-        X[i] = sum / a.get_item(i, i)
+        if a.get_item(i, i) == 0:
+            X[i] = 0
+        else:
+            X[i] = sum / a.get_item(i, i)
         i -= 1
 
     return X
