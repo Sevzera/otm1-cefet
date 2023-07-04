@@ -76,8 +76,17 @@ def find_optimal_solution(CB, CN, B, N, A, b):
                 N.set_column(lower_key, base_column_epsolon)
                 CB.set_item(epsolon_key, non_base_coeff_lower)
                 CN.set_item(lower_key, base_coeff_epsolon)
-
+                
                 XsT = gaus_method(B, b)
+                
+                underflow = B.get_size_rows()/2
+                print(underflow)
+                for x in XsT:
+                    if x == 1:
+                        underflow-=1
+                if underflow >= 1:
+                    return
+
                 print('values of Xs:')
                 print('{}\n'.format(XsT))
 
