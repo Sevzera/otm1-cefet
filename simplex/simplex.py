@@ -23,6 +23,9 @@ from classes import Vector, Matrix
 from file_handler import read_from_json
 from numerical_methods import gaus_method, scalar_product_method
 import argparse
+import time
+
+output = open("output.txt","w")
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-p", "--model_file", required=True,
@@ -43,17 +46,18 @@ def find_optimal_solution(CB, CN, B, N, A, b):
             column = Vector(N.get_column(i))
             Cxn.append(CN.get_item(i) - scalar_product_method(lambT, column))
 
-        print('Values of Cxn')
-        print(Cxn)
-        print('==============')
+        # print('Values of Cxn')
+        # print(Cxn)
+        # print('==============')
 
         # there_is_zero = False
         # if 0 in Cxn:
         #     there_is_zero = True
         lower = min(Cxn)
         lower_key = Cxn.index(lower)
-        keyboard = int(input('0 to exit or other to continue: '))
-        if lower < 0 and keyboard:
+        # keyboard = int(input('0 to exit or other to continue: '))
+        # if lower < 0 and keyboard:
+        if lower < 0:
             y = Vector(gaus_method(B, Vector(N.get_column(lower_key))))
             there_is_epsolon  = False
             epsolon = 10000
@@ -80,49 +84,48 @@ def find_optimal_solution(CB, CN, B, N, A, b):
                 XsT = gaus_method(B, b)
                 
                 underflow = B.get_size_rows()/2
-                print(underflow)
                 for x in XsT:
                     if x == 1:
                         underflow-=1
                 if underflow >= 1:
                     return
 
-                print('values of Xs:')
-                print('{}\n'.format(XsT))
+                # print('values of Xs:')
+                # print('{}\n'.format(XsT))
 
-                print('base:')
-                print(CB)
-                print('non-base:')
-                print(CN)
+                # print('base:')
+                # print(CB)
+                # print('non-base:')
+                # print(CN)
 
-                print('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
+                output.write('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
             
             else:
                 print("there's no valid epsolon\n")
 
                 XsT = gaus_method(B, b)
-                print('values of Xs:')
-                print('{}\n'.format(XsT))
+                # print('values of Xs:')
+                # print('{}\n'.format(XsT))
 
-                print('base:')
-                print(CB)
-                print('non-base:')
-                print(CN)
+                # print('base:')
+                # print(CB)
+                # print('non-base:')
+                # print(CN)
 
-                print('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
+                output.write('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
                 break
 
         else:
             XsT = gaus_method(B, b)
-            print('values of Xs:')
-            print('{}\n'.format(XsT))
+            # print('values of Xs:')
+            # print('{}\n'.format(XsT))
 
-            print('base:')
-            print(CB)
-            print('non-base:')
-            print(CN)
+            # print('base:')
+            # print(CB)
+            # print('non-base:')
+            # print(CN)
 
-            print('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
+            output.write('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
             break
 
 def main():
@@ -155,15 +158,16 @@ def main():
     B = Matrix(variables['B'])
     b = Vector(variables['b'])
     XsT = gaus_method(B, b)
-    print('values of Xs:')
-    print('{}\n'.format(XsT))
+    # print('values of Xs:')
+    # print('{}\n'.format(XsT))
 
-    print('base:')
-    print(CB)
-    print('non-base:')
-    print(CN)
+    # print('base:')
+    # print(CB)
+    # print('non-base:')
+    # print(CN)
 
-    print('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
+    # output.write('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
+    output.write('f(x) = {}\n'.format(scalar_product_method(XsT, CB)))
 
     B = Matrix(variables['B'])
     N = Matrix(variables['N'])
@@ -172,4 +176,9 @@ def main():
     find_optimal_solution(CB, CN, B, N, A, b)
 
 if __name__ == "__main__":
+    begin = time.time()
     main()
+    end = time.time()
+    execution_time = end - begin
+    output.write(str(execution_time))
+    output.close()
