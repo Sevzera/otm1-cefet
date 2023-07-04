@@ -5,7 +5,7 @@ import { translateBestSolution } from "./utils/utils";
 
 import { ARRAY_OF_FOODS_50x50_150, best_solution_20, best_solution_35, best_solution_50, best_solution_65, best_solution_80 } from "./data.js";
 
-const FOOD_COUNT = 35; //20, 35, 50, 65, 80 (1h no simplex)
+const FOOD_COUNT = 80; //20, 35, 50, 65, 80 (1h no simplex)
 
 const BEST_SOLUTION = true
 
@@ -140,10 +140,10 @@ const App = () => {
                       className={`w-full h-full ${
                         isSnake
                           ? "bg-black"
-                          : isFood
-                          ? "bg-green-500"
                           : INITIAL_SNAKE[0].x === x && INITIAL_SNAKE[0].y === y
                           ? "bg-red-500"
+                          : isFood
+                          ? "bg-green-500"
                           : "bg-gray-200"
                       } border border-gray-300`}
                     />
